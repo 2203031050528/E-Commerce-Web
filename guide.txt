@@ -1,0 +1,7 @@
+first create a app using command:
+
+npm install ajv@^8.0.0 ajv-keywords@^5.0.0
+
+
+then initialize tailwindcss :
+for install : 
