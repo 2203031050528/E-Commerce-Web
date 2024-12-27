@@ -37,7 +37,7 @@ function Navbar({children}){
             <div className="flex items-center">
               <div className="shrink-0">
                 <img
-                  alt="Your Company"
+                  alt="Shopify"
                   src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
                   className="size-8"
                 />
@@ -161,11 +161,11 @@ function Navbar({children}){
         </DisclosurePanel>
       </Disclosure>
 
-      {/* <header className="bg-white shadow">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+      { <header className="bg-white shadow">
+        <div className="mx-10 max-w-7xl px-5 py-4 sm:px-2 lg:px-2 text-left"  >
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Shopify</h1>
         </div>
-      </header> */}
+      </header> }
       <main>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">{children}</div>
       </main>
