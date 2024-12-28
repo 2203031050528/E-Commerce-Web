@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import image from './image.png'
-
+import {Link} from 'react-router-dom'
 import {
   decrement,
   increment,
@@ -95,9 +95,9 @@ export default function Signup() {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Alread have an Account{' '}
-            <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <Link to="/login"  className="font-semibold text-indigo-600 hover:text-indigo-500">
               log in 
-            </a>
+            </Link>
           </p>
         </div>
       </div>
