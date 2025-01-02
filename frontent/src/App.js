@@ -6,6 +6,8 @@ import LoginPage from "./page/LoginPage";
 import SignPage from "./page/SignPage";
 import Cart from "./features/cart/Cart";
 
+import CartPage from "./page/CartPage";
+
 
 import {
   createBrowserRouter,
@@ -13,6 +15,7 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+
 
 const router = createBrowserRouter([
   {
@@ -30,7 +33,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/cart",
-    element: <Cart></Cart>,
+    element: <CartPage></CartPage>,
   }
 ]);
 

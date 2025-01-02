@@ -10,10 +10,10 @@ const user = {
 }
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
+  { name: 'Home', href: '#', current: false },
+  { name: 'About', href: '#', current: false },
+  { name: 'contact', href: '#', current: false },
+  { name: 'Help', href: '#', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -62,6 +62,7 @@ function Navbar({children}){
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6">
+               <Link to="/cart">
                 <button
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -70,6 +71,7 @@ function Navbar({children}){
                   <span className="sr-only">View notifications</span>
                   <ShoppingCartIcon aria-hidden="true" className="size-6" />
                 </button>
+                </Link>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

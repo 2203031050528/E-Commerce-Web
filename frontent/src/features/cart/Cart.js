@@ -9,6 +9,7 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { decrement, increment, selectCount } from "./CartSlice";
+import { Link } from "react-router";
 export default function Cart() {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
@@ -74,7 +75,17 @@ export default function Cart() {
                       </p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
-                      <p className="text-gray-500">Qty {product.quantity}</p>
+                     <div className="text-gray-500">
+                      <h4 className="qty p-1">Qty</h4>
+                      <select>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+
+                      </div>
 
                       <div className="flex">
                         <button
@@ -111,6 +122,8 @@ export default function Cart() {
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
             <p>
               or{" "}
+
+              <Link to="/">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -119,6 +132,7 @@ export default function Cart() {
                 Continue Shopping
                 <span aria-hidden="true"> &rarr;</span>
               </button>
+              </Link>
             </p>
           </div>
         </div>
