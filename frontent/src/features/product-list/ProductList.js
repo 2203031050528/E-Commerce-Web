@@ -6,7 +6,7 @@ import {
   
   increment,
   selectCount,
-} from './productListSlice.js.js';
+} from './productlistSlice.js';
 
 
 
