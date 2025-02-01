@@ -7,8 +7,11 @@ import {
   increment,
   selectCount,
 } from '../authSlice';
+import { ProtectedRoute } from './ProtectedRoute';
+import { Navigate } from 'react-router-dom';
+
 export default function Login() {
-  const count = useSelector(selectCount);
+  // const count = useSelector(selectCount);
   const dispatch = useDispatch();
 
 

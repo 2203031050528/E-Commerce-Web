@@ -1,52 +1,109 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchCount } from './authAPI';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialState = {
-  value: 0,
-  status: 'idle',
-};
+// Define the async thunk for login
+export const login = createAsyncThunk(
+    'auth/login',
+    async (credentials, { rejectWithValue }) => {
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/login', credentials);
+            localStorage.setItem('token', response.data.token);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched. Thunks are
-// typically used to make async requests.
-export const incrementAsync = createAsyncThunk(
-  'counter/fetchCount',
-  async (amount) => {
-    const response = await fetchCount(amount);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
+const authSlice = createSlice({
+    name: 'auth',
+    initialState: {
+        user: null,
+        token: localStorage.getItem('token'),
+        isAuthenticated: false,
+        error: null,
+        loading: false
+    },
+    reducers: {
+        logout: (state) => {
+            state.user = null;
+            state.token = null;
+            state.isAuthenticated = false;
+            localStorage.removeItem('token');
+        },
+        clearError: (state) => {
+            state.error = null;
+        }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(register.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.loading = false;
+                state.isAuthenticated = true;
+                state.user = action.payload.user;
+                state.token = action.payload.token;
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(login.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.loading = false;
+                state.isAuthenticated = true;
+                state.user = action.payload.user;
+                state.token = action.payload.token;
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+    }
+});
+
+export const register = createAsyncThunk(
+  'auth/register',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+      const data = await response.json();
+      
+      if (!response.ok) {
+        return rejectWithValue(data.message);
+      }
+      
+      localStorage.setItem('token', data.token);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
-export const counterSlice = createSlice({
-  name: 'counter',
-  initialState,
- reducers: {
-    increment: (state) => {
-      
-      state.value += 1;
-    },
-   
-  },
-  
-  extraReducers: (builder) => {
-    builder
-      .addCase(incrementAsync.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.value += action.payload;
-      });
-  },
-});
+const API_URL = 'http://localhost:5000/api';
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const loginUser = async (credentials) => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/login`, credentials);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
 
-export const selectCount = (state) => state.counter.value;
-
-
-
-export default counterSlice.reducer;
+// Make sure these exports exist
+export const { logout, clearError } = authSlice.actions;
+export default authSlice.reducer;
